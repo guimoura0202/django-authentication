@@ -1,6 +1,6 @@
 # Django Authentication Project
 
-Fiz basicamente uma configuração inicial de um sistema de autenticação usando Django. O projeto inclui uma aplicação Django chamada `auth_site` para gerenciar as funcionalidades de login e autenticação.
+Fiz basicamente uma configuração inicial de um sistema de autenticação usando Django. 
 
 ## Estrutura do Projeto
 
@@ -8,10 +8,8 @@ Fiz basicamente uma configuração inicial de um sistema de autenticação usand
 - **auth_site/**: Aplicativo Django para gerenciar autenticação de usuários.
 - **manage.py**: Arquivo principal de gerenciamento do Django.
 
-## Passo a passo
-   ```bash
-   git clone https://github.com/guimoura0202/django-authentication.git
-   cd django-authentication
-   python -m venv venv
-   venv\Scripts\activate
-   pip install -r requirements.txt
+## Explicação
+- Criei, clonei e entrei no repositório;
+- Criei as variáveis de ambiente com `python -m venv venv` e logo em seguida ativei elas com `venv\Scripts\activate`
+- Instalei Django na minha venv e dei um `pip freeze > requirements.txt` pra puxar todas as dependências
+- Executei `django-admin startproject authentication . ` e `python manage.py startapp auth_site ` pra criar o projeto e o app, respectivamente
