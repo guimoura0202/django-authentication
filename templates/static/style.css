@@ -257,3 +257,44 @@ form button[type="submit"]:hover, button:hover, a.button:hover {
     margin-bottom: 25px;
     text-align: center;
 }
+.password-requirements {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.password-requirements li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #d9534f; /* Vermelho por padrão */
+}
+
+.password-requirements li.valid {
+    color: #5cb85c; /* Verde quando válido */
+}
+
+.password-requirements li::before {
+    content: '✖'; /* X por padrão */
+    display: inline-block;
+    width: 20px;
+}
+
+.password-requirements li.valid::before {
+    content: '✔'; /* Check quando válido */
+}
+
+/* Estilos para feedback de confirmação de senha */
+.password-match {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.password-match.valid {
+    color: #5cb85c; /* Verde */
+}
+
+.password-match.invalid {
+    color: #d9534f; /* Vermelho */
+}

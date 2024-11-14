@@ -21,9 +21,38 @@
         <div class="auth-box">
             <div class="auth-left">
                 <h2>Cadastro</h2>
-                <form method="post" action="">
+                <form method="post" action="" id="signup-form">
                     {% csrf_token %}
-                    {{ signup_form.as_p }}
+                    {{ signup_form.non_field_errors }}
+                    
+                    <label for="id_username">Usuário:</label>
+                    {{ signup_form.username }}
+                    {{ signup_form.username.errors }}
+                    
+                    <label for="id_email">Email:</label>
+                    {{ signup_form.email }}
+                    {{ signup_form.email.errors }}
+                    
+                    <label for="id_password1">Senha:</label>
+                    {{ signup_form.password1 }}
+                    {{ signup_form.password1.errors }}
+                    
+                    <!-- Lista de requisitos da senha -->
+                    <ul class="password-requirements" id="password-requirements">
+                        <li id="req-length">Mínimo de 8 caracteres</li>
+                        <li id="req-uppercase">Pelo menos uma letra maiúscula</li>
+                        <li id="req-lowercase">Pelo menos uma letra minúscula</li>
+                        <li id="req-number">Pelo menos um número</li>
+                        <li id="req-special">Pelo menos um caractere especial (!@#$%^&*)</li>
+                    </ul>
+                    
+                    <label for="id_password2">Confirmar Senha:</label>
+                    {{ signup_form.password2 }}
+                    {{ signup_form.password2.errors }}
+                    
+                    <!-- Feedback de correspondência de senha -->
+                    <p class="password-match" id="password-match"></p>
+                    
                     <button type="submit" name="signup">Cadastrar</button>
                 </form>
             </div>
@@ -46,5 +75,75 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript para validação da senha -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('id_password1');
+            const confirmPasswordInput = document.getElementById('id_password2');
+            const passwordRequirements = {
+                length: document.getElementById('req-length'),
+                uppercase: document.getElementById('req-uppercase'),
+                lowercase: document.getElementById('req-lowercase'),
+                number: document.getElementById('req-number'),
+                special: document.getElementById('req-special')
+            };
+            const passwordMatch = document.getElementById('password-match');
+
+            function validatePassword(password) {
+                // Regras de validação
+                const validations = {
+                    length: password.length >= 8,
+                    uppercase: /[A-Z]/.test(password),
+                    lowercase: /[a-z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[!@#$%^&*]/.test(password)
+                };
+
+                // Atualizar o DOM com base nas validações
+                for (let key in validations) {
+                    if (validations[key]) {
+                        passwordRequirements[key].classList.add('valid');
+                        passwordRequirements[key].classList.remove('invalid');
+                    } else {
+                        passwordRequirements[key].classList.remove('valid');
+                        passwordRequirements[key].classList.add('invalid');
+                    }
+                }
+
+                // Retornar se todas as validações são verdadeiras
+                return Object.values(validations).every(Boolean);
+            }
+
+            function checkPasswordMatch() {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (confirmPassword === "") {
+                    passwordMatch.textContent = "";
+                    passwordMatch.classList.remove('valid', 'invalid');
+                    return;
+                }
+
+                if (password === confirmPassword) {
+                    passwordMatch.textContent = "As senhas coincidem.";
+                    passwordMatch.classList.add('valid');
+                    passwordMatch.classList.remove('invalid');
+                } else {
+                    passwordMatch.textContent = "As senhas não coincidem.";
+                    passwordMatch.classList.add('invalid');
+                    passwordMatch.classList.remove('valid');
+                }
+            }
+
+            // Eventos
+            passwordInput.addEventListener('input', function() {
+                validatePassword(passwordInput.value);
+                checkPasswordMatch();
+            });
+
+            confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+        });
+    </script>
 </body>
 </html>
