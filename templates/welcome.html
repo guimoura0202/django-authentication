@@ -9,6 +9,13 @@
 </head>
 <body>
     <div class="welcome-container">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
         <h1>Bem-vindo, {{ user.username }} ao nosso sistema!</h1>
         <p>Nome: {{ user.get_full_name }}</p>
         <p>Email: {{ user.email }}</p>
