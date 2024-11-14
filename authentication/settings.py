@@ -146,13 +146,21 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': os.getenv('GOOGLE_CLIENT_ID'),
             'secret': os.getenv('GOOGLE_SECRET'),
             'key': os.getenv('GOOGLE_KEY')
-        }
+        },
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'REDIRECT_URI': 'http://localhost:8000/accounts/google/login/callback/',
     },
     'discord': {
-    'APP': {
-        'client_id': os.getenv('DISCORD_CLIENT_ID'),
-        'secret': os.getenv('DISCORD_SECRET'),
-        'key': os.getenv('DISCORD_KEY')
+        'APP': {
+            'client_id': os.getenv('DISCORD_CLIENT_ID'),
+            'secret': os.getenv('DISCORD_SECRET')
+        },
+        'AUTH_PARAMS': {'access_type': 'online'},
+        'REDIRECT_URI': 'http://locallhost:8000/accounts/discord/login/callback/',
     }
 }
-}
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' 
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
