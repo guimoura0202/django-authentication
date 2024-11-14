@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import CustomSignupForm, CustomLoginForm
 from allauth.account.utils import send_email_confirmation
-
+from allauth.account.views import ConfirmEmailView
+from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
 def index(request):
     signup_form = CustomSignupForm()
     login_form = CustomLoginForm()
@@ -42,3 +43,10 @@ def welcome(request):
     if not request.user.emailaddress_set.filter(verified=True).exists():
         messages.warning(request, "Por favor, confirme seu cadastro. Um e-mail de confirmação foi enviado.")
     return render(request, 'welcome.html', {'user': request.user})
+
+class CustomConfirmEmailView(ConfirmEmailView):
+    def get(self, *args, **kwargs):
+        confirmation = self.get_object()
+        confirmation.confirm(self.request)
+        messages.success(self.request, "Seu e-mail foi confirmado com sucesso!")
+        return render(self.request, "custom_confirm_email.html", {})

@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de E-mail</title>
+    <link rel="stylesheet" href="{% static '/style.css' %}">
+</head>
+<body>
+    <div class="confirmation-container">
+        <h1>Confirmação de E-mail</h1>
+        <p>Seu e-mail foi confirmado com sucesso! Você já pode acessar todos os recursos da plataforma.</p>
+        <a href="{% url 'welcome' %}">Ir para a página inicial</a>
+    </div>
+</body>
+</html>
