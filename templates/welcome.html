@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo</title>
+    <link rel="stylesheet" href="{% static '/style.css' %}">
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Bem-vindo, {{ user.username }} ao nosso sistema!</h1>
+        <p>Nome: {{ user.get_full_name }}</p>
+        <p>Email: {{ user.email }}</p>
+
+        <!-- Botão de logout como um formulário -->
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

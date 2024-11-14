@@ -159,8 +159,9 @@ SOCIALACCOUNT_PROVIDERS = {
         'REDIRECT_URI': 'http://locallhost:8000/accounts/discord/login/callback/',
     }
 }
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/welcome/'
 LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory' 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
