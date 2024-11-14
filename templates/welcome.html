@@ -1,3 +1,4 @@
+<!-- templates/welcome.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -5,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem-vindo</title>
-    <link rel="stylesheet" href="{% static '/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <div class="welcome-container">
@@ -25,6 +26,51 @@
             {% csrf_token %}
             <button type="submit">Logout</button>
         </form>
+
+        <!-- Botões para criar Review e Jogo -->
+        <div class="actions">
+            <a href="{% url 'create_review' %}">
+                <button>Criar Review</button>
+            </a>
+            <a href="{% url 'create_game' %}">
+                <button>Criar Jogo</button>
+            </a>
+        </div>
+
+        <!-- Lista de Reviews -->
+        <div class="reviews-container">
+            <h2>Últimos Reviews</h2>
+            <div class="reviews-grid">
+                {% for review in reviews %}
+                    <div class="review-card">
+                        <img src="{{ review.game.image.url }}" alt="{{ review.title }} Image" class="review-image">
+                        <h3>{{ review.title }}</h3>
+                        <p><strong>Jogo:</strong> {{ review.game.title }}</p>
+                        <p><strong>Descrição:</strong> {{ review.description }}</p>
+                        <p><strong>Nota:</strong> {{ review.rating }}/5</p>
+                        <p><strong>Autor:</strong> {{ review.author.username }}</p>
+                    </div>
+                {% empty %}
+                    <p>Nenhum review disponível no momento.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Opcional: Lista de Jogos -->
+        <div class="games-container">
+            <h2>Jogos Disponíveis</h2>
+            <div class="games-grid">
+                {% for game in games %}
+                    <div class="game-card">
+                        <img src="{{ game.image.url }}" alt="{{ game.title }} Image" class="game-image">
+                        <h3>{{ game.title }}</h3>
+                        <p>{{ game.description }}</p>
+                    </div>
+                {% empty %}
+                    <p>Nenhum jogo disponível no momento.</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </body>
 </html>

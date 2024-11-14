@@ -3,10 +3,12 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import CustomSignupForm, CustomLoginForm
+from .forms import CustomSignupForm, CustomLoginForm, ReviewForm, GameForm
 from allauth.account.utils import send_email_confirmation
 from allauth.account.views import ConfirmEmailView
 from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
+from .models import Review, Game
+
 def index(request):
     signup_form = CustomSignupForm()
     login_form = CustomLoginForm()
@@ -42,7 +44,48 @@ def index(request):
 def welcome(request):
     if not request.user.emailaddress_set.filter(verified=True).exists():
         messages.warning(request, "Por favor, confirme seu cadastro. Um e-mail de confirmação foi enviado.")
-    return render(request, 'welcome.html', {'user': request.user})
+
+    reviews = Review.objects.select_related('game', 'author').order_by('-created_at')  # Ordenar por data de criação
+    games = Game.objects.all()  # Obter todos os jogos
+
+    return render(request, 'welcome.html', {
+        'user': request.user,
+        'reviews': reviews,
+        'games': games,  # Adicionar jogos ao contexto
+    })
+
+@login_required
+def create_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.author = request.user
+            # review.image = review.game.image  # Não é necessário mais
+            review.save()
+            messages.success(request, "Review criada com sucesso!")
+            return redirect('welcome')
+        else:
+            messages.error(request, "Corrija os erros no formulário.")
+    else:
+        form = ReviewForm()
+    
+    return render(request, 'create_review.html', {'form': form})
+
+@login_required
+def create_game(request):
+    if request.method == 'POST':
+        form = GameForm(request.POST, request.FILES)
+        if form.is_valid():
+            game = form.save()
+            messages.success(request, "Jogo criado com sucesso!")
+            return redirect('welcome')
+        else:
+            messages.error(request, "Corrija os erros no formulário.")
+    else:
+        form = GameForm()
+    
+    return render(request, 'create_game.html', {'form': form})
 
 class CustomConfirmEmailView(ConfirmEmailView):
     def get(self, *args, **kwargs):

@@ -179,4 +179,54 @@ form button[type="submit"]:hover {
 .confirmation-container a:hover {
     background-color: #4cae4c;
 }
+.auth-container, .welcome-container, .create-review-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
 
+.messages {
+    margin-bottom: 20px;
+}
+
+.error-message {
+    color: red;
+}
+
+.create-review button, .create-review a button {
+    padding: 10px 20px;
+    margin: 10px 0;
+}
+
+.reviews-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.review-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: calc(33% - 40px);
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.review-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+.game-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+.review-card h3 {
+    margin-top: 10px;
+}
+
+.review-card p {
+    margin: 5px 0;
+}
