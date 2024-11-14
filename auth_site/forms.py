@@ -37,3 +37,18 @@ class GameForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'rows': 4}),
         }
+        
+class EditProfileForm(forms.ModelForm):
+    first_name = forms.CharField(required=False, label='Nome')
+    last_name = forms.CharField(required=False, label='Sobrenome')
+    email = forms.EmailField(required=True, label='Email')
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("Este email já está em uso.")
+        return email

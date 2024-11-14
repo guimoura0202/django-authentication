@@ -1,4 +1,3 @@
-<!-- templates/welcome.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -20,14 +19,10 @@
         <h1>Bem-vindo, {{ user.username }} ao nosso sistema!</h1>
         <p>Nome: {{ user.get_full_name }}</p>
         <p>Email: {{ user.email }}</p>
-
-        <!-- Botão de logout como um formulário -->
         <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <button type="submit">Logout</button>
         </form>
-
-        <!-- Botões para criar Review e Jogo -->
         <div class="actions">
             <a href="{% url 'create_review' %}">
                 <button>Criar Review</button>
@@ -35,9 +30,10 @@
             <a href="{% url 'create_game' %}">
                 <button>Criar Jogo</button>
             </a>
+            <a href="{% url 'edit_profile' %}">
+                <button>Editar Perfil</button>
+            </a>
         </div>
-
-        <!-- Lista de Reviews -->
         <div class="reviews-container">
             <h2>Últimos Reviews</h2>
             <div class="reviews-grid">
@@ -55,8 +51,6 @@
                 {% endfor %}
             </div>
         </div>
-
-        <!-- Opcional: Lista de Jogos -->
         <div class="games-container">
             <h2>Jogos Disponíveis</h2>
             <div class="games-grid">

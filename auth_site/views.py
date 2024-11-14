@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import CustomSignupForm, CustomLoginForm, ReviewForm, GameForm
+from .forms import CustomSignupForm, CustomLoginForm, ReviewForm, GameForm, EditProfileForm
 from allauth.account.utils import send_email_confirmation
 from allauth.account.views import ConfirmEmailView
 from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
@@ -93,3 +93,18 @@ class CustomConfirmEmailView(ConfirmEmailView):
         confirmation.confirm(self.request)
         messages.success(self.request, "Seu e-mail foi confirmado com sucesso!")
         return render(self.request, "custom_confirm_email.html", {})
+@login_required
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Perfil atualizado com sucesso!")
+            return redirect('welcome')
+        else:
+            messages.error(request, "Corrija os erros no formulário.")
+    else:
+        form = EditProfileForm(instance=user)
+    
+    return render(request, 'edit_profile.html', {'form': form})
