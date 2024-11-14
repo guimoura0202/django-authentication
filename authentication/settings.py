@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -153,9 +154,10 @@ SOCIALACCOUNT_PROVIDERS = {
     'discord': {
         'APP': {
             'client_id': os.getenv('DISCORD_CLIENT_ID'),
-            'secret': os.getenv('DISCORD_SECRET')
+            'secret': os.getenv('DISCORD_SECRET'),
+            'key':'',
         },
-        'AUTH_PARAMS': {'access_type': 'online'},
+        'SCOPE': ['identify', 'email'],
         'REDIRECT_URI': 'http://locallhost:8000/accounts/discord/login/callback/',
     }
 }
@@ -164,4 +166,9 @@ LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory' 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_GMAIL')
+EMAIL_HOST_PASSWORD = os.getenv('SENHA_APP') 
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_GMAIL')
