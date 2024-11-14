@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Game(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=70)
     image = models.ImageField(upload_to='game_images/')
     description = models.TextField()
 
@@ -13,7 +13,7 @@ class Game(models.Model):
 class Review(models.Model):
     RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]  # 1 a 5
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=70)
     description = models.TextField()
     rating = models.IntegerField(choices=RATING_CHOICES)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
