@@ -4,15 +4,13 @@
     padding: 0;
     font-family: Arial, sans-serif;
 }
-
-.auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f7f7f7;
+.auth-container, .welcome-container, .create-review-container, .create-game-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
 }
-
 .auth-box {
     display: flex;
     width: 80%;
@@ -50,22 +48,6 @@ input[type="text"], input[type="email"], input[type="password"] {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-
-button[type="submit"] {
-    padding: 10px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #45a049;
-}
-
 .social-login {
     display: flex;
     flex-direction: column;
@@ -114,7 +96,9 @@ button[type="submit"]:hover {
 }
 
 .messages {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #d9534f;
 }
 
 .messages p {
@@ -124,7 +108,7 @@ button[type="submit"]:hover {
 }
 
 /* Estilo do botão de logout */
-form button[type="submit"] {
+form button[type="submit"], button, a.button {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
@@ -136,7 +120,7 @@ form button[type="submit"] {
     transition: background-color 0.3s ease;
 }
 
-form button[type="submit"]:hover {
+form button[type="submit"]:hover, button:hover, a.button:hover {
     background-color: #c9302c;
 }
 
@@ -198,35 +182,78 @@ form button[type="submit"]:hover {
     margin: 10px 0;
 }
 
-.reviews-grid {
+.reviews-grid, .games-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
 }
 
-.review-card {
+.review-card, .game-card {
     border: 1px solid #ccc;
     padding: 15px;
     width: calc(33% - 40px);
     box-sizing: border-box;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
 }
 
-.review-image {
+.review-card:hover, .game-card:hover {
+    transform: translateY(-5px);
+}
+
+.review-image, .game-image {
     max-width: 100%;
     height: auto;
     border-radius: 5px;
+    margin-bottom: 10px;
 }
-.game-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-.review-card h3 {
+
+.review-card h3, .game-card h3 {
     margin-top: 10px;
+    font-size: 20px;
+    color: #333;
 }
 
-.review-card p {
+.review-card p, .game-card p {
     margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .review-card, .game-card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .review-card, .game-card {
+        width: 100%;
+    }
+}
+
+.confirmation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #e9f7ef;
+    padding: 20px;
+}
+
+.confirmation-container h1 {
+    color: #5cb85c;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.confirmation-container p {
+    color: #555;
+    font-size: 18px;
+    margin-bottom: 25px;
+    text-align: center;
 }
